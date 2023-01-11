@@ -12,5 +12,8 @@ fun FurnitureApp() {
         composable(route = "landing") {
             Landing(navController)
         }
+        composable(route = "catalogue") {
+            MainCatalogue()
+        }
     }
 }

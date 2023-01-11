@@ -76,7 +76,7 @@ fun Landing(navController: NavController) {
                     end.linkTo(parent.end)
                 })
         Button(
-            onClick = {  },
+            onClick = { navController.navigate("catalogue")  },
             colors = ButtonDefaults.buttonColors(containerColor = DarkGreen),
             modifier = Modifier
                 .padding(10.dp)
