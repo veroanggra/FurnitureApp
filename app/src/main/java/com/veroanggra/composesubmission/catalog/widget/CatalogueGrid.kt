@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.veroanggra.composesubmission.R
 import com.veroanggra.composesubmission.catalog.data.CategoriesData
+import com.veroanggra.composesubmission.catalog.data.ProductData
 import com.veroanggra.composesubmission.ui.theme.Cream
 import com.veroanggra.composesubmission.ui.theme.DarkCream
 import com.veroanggra.composesubmission.ui.theme.DarkGreen
@@ -34,15 +36,27 @@ fun ProductCatalogue() {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.padding(top = 20.dp),
-        content = {
-            items(CategoriesData.categories.size) { index ->
-                ItemProductCatalogue()
-            }
-        })
+    ) {
+        items(ProductData.product) { product ->
+            ItemProductCatalogue(
+                name = product.nameProduct,
+                category = product.categoryProduct,
+                isfavorite = product.isFavorite,
+                image = product.imageProduct,
+                price = product.priceProduct
+            )
+        }
+    }
 }
 
 @Composable
-fun ItemProductCatalogue() {
+fun ItemProductCatalogue(
+    name: String,
+    category: String,
+    isfavorite: Boolean,
+    image: String,
+    price: String
+) {
     Card(
         colors = CardDefaults.cardColors(containerColor = DarkCream),
         shape = RoundedCornerShape(15.dp),
@@ -83,7 +97,7 @@ fun ItemProductCatalogue() {
                 painter = painterResource(id = R.drawable.img_top_list),
                 contentDescription = null
             )
-            Text(text = "Alto Armchair",
+            Text(text = name,
                 color = Color.DarkGray,
                 fontSize = 14.sp,
                 modifier = Modifier
@@ -91,7 +105,7 @@ fun ItemProductCatalogue() {
                     .constrainAs(titleProduct) {
                         top.linkTo(imgProduct.bottom)
                     })
-            Text(text = "$20",
+            Text(text = price,
                 style = TextStyle(fontWeight = FontWeight.Bold),
                 fontSize = 14.sp,
                 modifier = Modifier
@@ -126,8 +140,8 @@ fun ItemProductCatalogue() {
     }
 }
 
-@Preview
-@Composable
-fun ItemProductCataloguePreview() {
-    ItemProductCatalogue()
-}
+//@Preview
+//@Composable
+//fun ItemProductCataloguePreview() {
+//    ItemProductCatalogue()
+//}
