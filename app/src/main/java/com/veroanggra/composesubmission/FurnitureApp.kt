@@ -11,19 +11,10 @@ import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.veroanggra.composesubmission.AppDestinations.PRODUCT_DETAIL_ID_KEY
 import com.veroanggra.composesubmission.catalog.ui.DetailProduct
-import kotlin.contracts.contract
 
 @Composable
 fun FurnitureApp() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "landing") {
-        composable(route = "landing") {
-            Landing(navController)
-        }
-        composable(route = "catalogue") {
-//            MainCatalogue(selectedProduct = )
-        }
-    }
     val action = remember(navController) {
         AppActions(navController)
     }

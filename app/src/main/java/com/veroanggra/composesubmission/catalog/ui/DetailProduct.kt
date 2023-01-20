@@ -33,7 +33,8 @@ fun DetailProduct(idProduct: Int) {
     val product: Product? = remember(idProduct) {
         ProductRepo.getProduct(idProduct = idProduct)
     }
-    Column(modifier = Modifier.fillMaxSize()) {
+    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+        val (cardProduct, titleProduct, subTitleProduct )
         Card(
             modifier = Modifier
                 .height(380.dp)
