@@ -2,6 +2,7 @@ package com.veroanggra.composesubmission.catalog.widget
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -20,30 +21,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.veroanggra.composesubmission.R
-import com.veroanggra.composesubmission.catalog.data.CategoriesData
-import com.veroanggra.composesubmission.catalog.data.ProductData
-import com.veroanggra.composesubmission.ui.theme.Cream
+import com.veroanggra.composesubmission.catalog.data.Product
+import com.veroanggra.composesubmission.catalog.data.ProductRepo
 import com.veroanggra.composesubmission.ui.theme.DarkCream
 import com.veroanggra.composesubmission.ui.theme.DarkGreen
 
 @Composable
-fun ProductCatalogue() {
+
+fun ProductCatalogue(
+    selectedProduct: (Int) -> Unit
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier.padding(top = 20.dp),
     ) {
-        items(ProductData.product) { product ->
+        items(ProductRepo.getListProduct()) { product ->
             ItemProductCatalogue(
-                name = product.nameProduct,
-                category = product.categoryProduct,
-                isfavorite = product.isFavorite,
-                image = product.imageProduct,
-                price = product.priceProduct
+                selectedProduct = selectedProduct,
+                products = product
             )
         }
     }
@@ -51,16 +49,16 @@ fun ProductCatalogue() {
 
 @Composable
 fun ItemProductCatalogue(
-    name: String,
-    category: String,
-    isfavorite: Boolean,
-    image: String,
-    price: String
+
+    selectedProduct: (Int) -> Unit,
+    products: Product
 ) {
     Card(
         colors = CardDefaults.cardColors(containerColor = DarkCream),
         shape = RoundedCornerShape(15.dp),
-        modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)
+        modifier = Modifier
+            .padding(horizontal = 8.dp, vertical = 8.dp)
+            .clickable { selectedProduct(products.idProduct) }
     ) {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
             val (imgProduct, favIcon, titleProduct, priceProduct, btnAddToChart, bottomSpace) = createRefs()
@@ -94,18 +92,20 @@ fun ItemProductCatalogue(
                         end.linkTo(parent.end)
                         top.linkTo(parent.top)
                     },
-                painter = painterResource(id = R.drawable.img_top_list),
-                contentDescription = null
+            painter = painterResource(id = products.imageProduct),
+            contentDescription = null
             )
-            Text(text = name,
-                color = Color.DarkGray,
-                fontSize = 14.sp,
-                modifier = Modifier
-                    .padding(start = 20.dp)
-                    .constrainAs(titleProduct) {
-                        top.linkTo(imgProduct.bottom)
-                    })
-            Text(text = price,
+            Text(
+                text = products.nameProduct,
+            color = Color.DarkGray,
+            fontSize = 14.sp,
+            modifier = Modifier
+                .padding(start = 20.dp)
+                .constrainAs(titleProduct) {
+                    top.linkTo(imgProduct.bottom)
+                })
+
+            Text(text = products.priceProduct,
                 style = TextStyle(fontWeight = FontWeight.Bold),
                 fontSize = 14.sp,
                 modifier = Modifier
@@ -140,8 +140,3 @@ fun ItemProductCatalogue(
     }
 }
 
-//@Preview
-//@Composable
-//fun ItemProductCataloguePreview() {
-//    ItemProductCatalogue()
-//}

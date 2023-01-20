@@ -6,10 +6,11 @@ import com.veroanggra.composesubmission.catalog.ui.CategoryMenu
 import com.veroanggra.composesubmission.catalog.widget.ProductCatalogue
 
 @Composable
-fun MainCatalogue() {
+
+fun MainCatalogue(selectedProduct: (Int) -> Unit) {
     Column {
         TopChairScreen()
         CategoryMenu()
-        ProductCatalogue()
+        ProductCatalogue(selectedProduct = selectedProduct)
     }
 }
