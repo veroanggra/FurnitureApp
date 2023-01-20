@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -34,11 +35,16 @@ fun DetailProduct(idProduct: Int) {
         ProductRepo.getProduct(idProduct = idProduct)
     }
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-        val (cardProduct, titleProduct, subTitleProduct )
+        val (imageProduct, titleProduct, subTitleProduct, descProduct, priceProduct) = createRefs()
         Card(
             modifier = Modifier
                 .height(380.dp)
-                .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp),
+                .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp)
+                .constrainAs(imageProduct) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                },
             colors = CardDefaults.cardColors(containerColor = DarkCream),
             shape = RoundedCornerShape(15.dp)
         ) {
@@ -112,16 +118,40 @@ fun DetailProduct(idProduct: Int) {
             Text(
                 text = it.nameProduct,
                 fontSize = 24.sp,
-                modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp),
-                style = TextStyle(color = Color.Black)
+                modifier = Modifier
+                    .padding(start = 20.dp, end = 20.dp, top = 20.dp)
+                    .constrainAs(titleProduct) {
+                        start.linkTo(parent.start)
+                        top.linkTo(imageProduct.bottom)
+                    },
+                style = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold)
             )
         }
         product?.let {
             Text(
-                text = it.priceProduct,
+                text = it.subTitle,
                 fontSize = 16.sp,
-                modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 5.dp),
+                modifier = Modifier
+                    .padding(start = 20.dp, end = 20.dp, top = 5.dp)
+                    .constrainAs(subTitleProduct) {
+                        start.linkTo(parent.start)
+                        top.linkTo(titleProduct.bottom)
+                    },
                 style = TextStyle(color = Color.DarkGray)
+            )
+        }
+        product?.let {
+            Text(
+                text = "Rp ${it.priceProduct}",
+                fontSize = 20.sp,
+                style = TextStyle(color = Color.Black, fontWeight = FontWeight.Bold),
+                modifier = Modifier
+                    .padding(end = 20.dp)
+                    .constrainAs(priceProduct) {
+                        end.linkTo(parent.end)
+                        top.linkTo(titleProduct.top)
+                        bottom.linkTo(subTitleProduct.bottom)
+                    }
             )
         }
     }
