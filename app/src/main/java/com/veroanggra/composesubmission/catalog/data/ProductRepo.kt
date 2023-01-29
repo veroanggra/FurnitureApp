@@ -1,6 +1,5 @@
 package com.veroanggra.composesubmission.catalog.data
 
-import android.content.Context
 import com.veroanggra.composesubmission.R
 
 object ProductRepo {
