@@ -2,6 +2,7 @@ package com.veroanggra.composesubmission.catalog.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,7 +33,7 @@ import com.veroanggra.composesubmission.ui.theme.GreenPickerColor
 import com.veroanggra.composesubmission.ui.theme.YellowPickerColor
 
 @Composable
-fun DetailProduct(idProduct: Int) {
+fun DetailProduct(idProduct: Int, navigateUp: () -> Unit) {
     val product: Product? = remember(idProduct) {
         ProductRepo.getProduct(idProduct = idProduct)
     }
@@ -90,6 +91,7 @@ fun DetailProduct(idProduct: Int) {
                 Box(modifier = Modifier
                     .padding(start = 30.dp, top = 20.dp)
                     .background(color = Color.LightGray, shape = CircleShape)
+                    .clickable { navigateUp() }
                     .clip(
                         CircleShape
                     )

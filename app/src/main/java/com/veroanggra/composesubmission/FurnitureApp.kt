@@ -34,7 +34,7 @@ fun FurnitureApp() {
             })
         ) {
             val arguments = requireNotNull(it.arguments)
-            DetailProduct(idProduct = arguments.getInt(PRODUCT_DETAIL_ID_KEY))
+            DetailProduct(idProduct = arguments.getInt(PRODUCT_DETAIL_ID_KEY), navigateUp = action.navigateUp)
         }
     }
 }
@@ -42,6 +42,9 @@ fun FurnitureApp() {
 class AppActions(navController: NavController) {
     val selectedProduct: (Int) -> Unit = { idProduct: Int ->
         navController.navigate("detail/$idProduct")
+    }
+    val navigateUp: () -> Unit = {
+        navController.navigateUp()
     }
 }
 
