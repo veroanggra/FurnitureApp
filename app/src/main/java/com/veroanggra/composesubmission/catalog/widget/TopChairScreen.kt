@@ -3,8 +3,10 @@ package com.veroanggra.composesubmission
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -19,12 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.veroanggra.composesubmission.ui.theme.DarkCream
 import com.veroanggra.composesubmission.ui.theme.NeonGreen
 
 @Composable
 fun TopChairScreen() {
     ConstraintLayout(modifier = Modifier) {
-        val (topLay, topDesc, topImageDesc, discTitle, discSubtitle) = createRefs()
+        val (topLay, topDesc, topImageDesc, discTitle, discSubtitle, profile) = createRefs()
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -53,6 +56,30 @@ fun TopChairScreen() {
                     Icons.Filled.Search,
                     contentDescription = null,
                     tint = Color.Gray,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+        Box(
+            Modifier
+                .padding(start = 20.dp, top = 10.dp)
+                .constrainAs(profile) {
+                    top.linkTo(topLay.bottom)
+                    start.linkTo(parent.start)
+                }) {
+            Button(
+                onClick = { },
+                colors = ButtonDefaults.buttonColors(Color.LightGray),
+                modifier = Modifier
+                    .width(30.dp)
+                    .height(30.dp),
+                shape = CircleShape,
+                contentPadding = PaddingValues(start = 6.dp, end = 6.dp)
+            ) {
+                Icon(
+                    Icons.Filled.Person,
+                    contentDescription = null,
+                    tint = DarkCream,
                     modifier = Modifier.fillMaxSize()
                 )
             }
