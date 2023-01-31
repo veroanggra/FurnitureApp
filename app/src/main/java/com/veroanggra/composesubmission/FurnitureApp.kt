@@ -23,7 +23,10 @@ fun FurnitureApp() {
             Landing(navController)
         }
         composable(route = AppDestinations.PRODUCT_ROUTE) {
-            MainCatalogue(selectedProduct = action.selectedProduct)
+            MainCatalogue(selectedProduct = action.selectedProduct, navController = navController)
+        }
+        composable(route = AppDestinations.ABOUT_ROUTE) {
+            AboutScreen(navigateUp = action.navigateUp)
         }
         composable(
             route = "${AppDestinations.PRODUCT_DETAIL_ROUTE}/{$PRODUCT_DETAIL_ID_KEY}",
@@ -34,7 +37,10 @@ fun FurnitureApp() {
             })
         ) {
             val arguments = requireNotNull(it.arguments)
-            DetailProduct(idProduct = arguments.getInt(PRODUCT_DETAIL_ID_KEY), navigateUp = action.navigateUp)
+            DetailProduct(
+                idProduct = arguments.getInt(PRODUCT_DETAIL_ID_KEY),
+                navigateUp = action.navigateUp
+            )
         }
     }
 }
@@ -52,5 +58,6 @@ private object AppDestinations {
     const val LANDING_ROUTE = "landing"
     const val PRODUCT_ROUTE = "catalogue"
     const val PRODUCT_DETAIL_ROUTE = "detail"
+    const val ABOUT_ROUTE = "about"
     const val PRODUCT_DETAIL_ID_KEY = "idProduct"
 }

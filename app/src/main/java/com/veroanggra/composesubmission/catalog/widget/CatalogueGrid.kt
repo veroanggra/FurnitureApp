@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
@@ -28,15 +29,17 @@ import com.veroanggra.composesubmission.catalog.data.Product
 import com.veroanggra.composesubmission.catalog.data.ProductRepo
 import com.veroanggra.composesubmission.ui.theme.DarkCream
 import com.veroanggra.composesubmission.ui.theme.DarkGreen
+import com.veroanggra.composesubmission.utils.AppBarExpendedHeight
 
 @Composable
 
 fun ProductCatalogue(
-    selectedProduct: (Int) -> Unit
+    selectedProduct: (Int) -> Unit, scrollState: LazyGridState
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
-        modifier = Modifier.padding(top = 20.dp),
+        contentPadding = PaddingValues(top = AppBarExpendedHeight),
+        state = scrollState
     ) {
         items(ProductRepo.getListProduct()) { product ->
             ItemProductCatalogue(
@@ -92,18 +95,18 @@ fun ItemProductCatalogue(
                         end.linkTo(parent.end)
                         top.linkTo(parent.top)
                     },
-            painter = painterResource(id = products.imageProduct),
-            contentDescription = null
+                painter = painterResource(id = products.imageProduct),
+                contentDescription = null
             )
             Text(
                 text = products.nameProduct,
-            color = Color.DarkGray,
-            fontSize = 14.sp,
-            modifier = Modifier
-                .padding(start = 20.dp)
-                .constrainAs(titleProduct) {
-                    top.linkTo(imgProduct.bottom)
-                })
+                color = Color.DarkGray,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .padding(start = 20.dp)
+                    .constrainAs(titleProduct) {
+                        top.linkTo(imgProduct.bottom)
+                    })
 
             Text(text = products.priceProduct,
                 style = TextStyle(fontWeight = FontWeight.Bold),
