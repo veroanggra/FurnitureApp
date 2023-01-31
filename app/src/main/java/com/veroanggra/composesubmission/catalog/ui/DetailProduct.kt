@@ -1,8 +1,6 @@
 package com.veroanggra.composesubmission.catalog.ui
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,9 +35,12 @@ fun DetailProduct(idProduct: Int, navigateUp: () -> Unit) {
     val product: Product? = remember(idProduct) {
         ProductRepo.getProduct(idProduct = idProduct)
     }
-    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+    val scrollState = rememberScrollState()
+    ConstraintLayout(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(scrollState, true)) {
         val (imageProduct, titleProduct, subTitleProduct, descProduct, priceProduct, space, colorTitle, colorSwatch1, colorSwatch2, colorSwatchShade1, colorSwatchShade2, space1, space2, space3, space4) = createRefs()
-        val (space5, space6, colorSwatch3, colorSwatchShade3) = createRefs()
+        val (space5, space6, colorSwatch3, colorSwatchShade3, spaceBottom) = createRefs()
         Card(
             modifier = Modifier
                 .height(380.dp)
@@ -282,5 +283,9 @@ fun DetailProduct(idProduct: Int, navigateUp: () -> Unit) {
                 top.linkTo(space5.top)
                 bottom.linkTo(space5.bottom)
             })
+        Spacer(modifier = Modifier.height(40.dp).constrainAs(spaceBottom) {
+            bottom.linkTo(parent.bottom)
+            top.linkTo(colorSwatch3.bottom)
+        })
     }
 }
